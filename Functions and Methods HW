@@ -1,0 +1,78 @@
+def vol(radius):
+        return 4/3*3.14*radius**3
+        
+print(vol(4))
+        
+def ran_check(num, low, high):
+        return num >= low and num <= high
+        
+def ran_check(num, low, high):
+                return num in range(low, high + 1)
+        
+print(ran_check(3,1,10))
+
+def up_low(string):
+        caps_count = 0
+        lows_count = 0
+        caps = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        lows = 'abcdefghijklmnopqrstuvwyz'
+        for s in string:
+                if s in caps:
+                        caps_count += 1
+                elif s in lows:
+                        lows_count += 1
+        print("No of uppercase characters : {} \
+               No of lowercase caharcters : {}".format(caps_count, lows_count))
+
+def up_low(string):
+        upper_count = 0
+        lower_count = 0
+        for char in string:
+                if char.isupper():
+                        upper_count += 1
+                elif char.islower():
+                        lower_count += 1
+                else:
+                        pass
+        print("No of uppercase characters : {} \
+               No of lowercase caharcters : {}".format(upper_count, lower_count))                 
+                        
+               
+up_low('Hello Mr. Rogers, how are you this fine Tuesday?')               
+                        
+def unique_list(l):
+        unique = []
+        for letter in l:
+                if letter not in unique:
+                        unique.append(letter)
+        return unique
+
+print(unique_list([1,1,1,1,2,2,3,3,3,3,4,5]))                
+
+def multiply(numbers):
+        product = 1
+        for num in numbers:
+                product *= num
+        return product
+        
+print(multiply([1,2,3,-4]))
+
+def palindrome(string):
+        return string[::-1] == string
+        
+print(palindrome('helleh'))
+
+import string
+
+def ispangram(str1, alphabet = string.ascii_lowercase):
+        for letter in str1.lower():
+                if letter not in alphabet and letter != ' ':
+                        return False
+                
+        return True
+
+def ispangram(str1, alphabet = string.ascii_lowercase):
+                alphaset = set(alphabet)                #create a set for alphabet
+                return alphaset <= set(str1.lower())     #test if string is a subset of alphabet
+        
+print(ispangram("The quick brown fox jumps over the lazy dog"))
