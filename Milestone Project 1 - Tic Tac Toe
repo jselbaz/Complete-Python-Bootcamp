@@ -1,0 +1,109 @@
+import random
+turn = ''
+
+positions = ['1','2','3','4','5','6','7','8','9']
+#next move -> space_check -> place_marker -> win_check -> repeat cycle for next player --> after win or draw - replay
+
+def display_board(positions):
+        return('\n\
+   |   |   \n\
+ {} | {} | {} \n\
+   |   |   \n\
+-----------\n\
+   |   |   \n\
+ {} | {} | {} \n\
+   |   |   \n\
+-----------\n\
+   |   |   \n\
+ {} | {} | {} \n\
+   |   |   \n').format(*positions)
+
+def choose_first():
+        num = random.randint(1,10)
+        if num >= 6:
+                print("Player 1 (X) goes first!")
+                turn = 'X'
+                return turn
+        else:
+                print("Player 2 (O) goes first!")
+                turn = 'O'
+                return turn
+
+def next_move():
+        while 1:
+                print(marker + '\'s turn\n')
+                move = input("Where do you want to go?\n")
+                if move in '123456789':
+                        return int(move)
+#combine next_move and space_check
+def space_check(move, positions):
+        while 1:
+                if (positions[move - 1] == 'X') or (positions[move - 1] == 'O'):
+                        print("That spot is taken - try again")
+                        return next_move()
+                else:
+                        break
+
+def place_marker(display_board, marker, position):
+        positions[position-1] = marker
+        print(display_board(positions))
+
+def win_check(marker):
+        if (marker in positions[0] and positions [1] and positions[2])\
+        or (marker in positions[3] and positions [4] and positions[5])\
+        or (marker in positions[6] and positions [7] and positions[8])\
+        or (marker in positions[0] and positions [3] and positions[6])\
+        or (marker in positions[1] and positions [4] and positions[7])\
+        or (marker in positions[2] and positions [5] and positions[8])\
+        or (marker in positions[0] and positions [4] and positions[8])\
+        or (marker in positions[2] and positions [4] and positions[6]):
+                print(marker + " wins!")
+
+def switch_turns(marker):
+        if marker == 'O':
+                marker = 'X'
+                return marker
+        else:
+                marker = 'O'
+                return marker
+
+def replay():
+        while 1:
+                response = input("Do you want to play again? (Y/N) \n")
+                if response.upper() == 'Y':
+                        pass
+                        turn_count = 0
+                elif response.upper() == 'N':
+                        system.exit()
+                else:
+                        print("Please eneter Y or N")
+
+                        
+while 1:
+        print("Welcome to Tic Tac Toe!")
+        print(display_board(positions))
+        marker = choose_first()
+        move = next_move()
+        space_check(move, positions)
+        place_marker(display_board, marker, move)
+        marker = switch_turns(marker)
+
+        while 1:
+                move = next_move()               
+                space_check(move, positions)
+                place_marker(display_board, marker, move)
+                #win_check(marker)
+                marker = switch_turns(marker)
+
+
+                
+
+                
+                
+                
+                
+'''def player_input():
+        while 1:
+                player1_marker = input("Player 1: Do you want to be X or O?\n")
+                if player1.upper() == 'X' or player1.upper() == 'O':
+                        break'''        
