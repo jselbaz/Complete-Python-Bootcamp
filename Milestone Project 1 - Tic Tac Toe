@@ -1,8 +1,5 @@
 import random
-turn = ''
-
-positions = ['1','2','3','4','5','6','7','8','9']
-#next move -> space_check -> place_marker -> win_check -> repeat cycle for next player --> after win or draw - replay
+import sys
 
 def display_board(positions):
         return('\n\
@@ -22,42 +19,60 @@ def choose_first():
         num = random.randint(1,10)
         if num >= 6:
                 print("Player 1 (X) goes first!")
-                turn = 'X'
-                return turn
+                marker = 'X'
+                return marker
         else:
                 print("Player 2 (O) goes first!")
-                turn = 'O'
-                return turn
+                marker = 'O'
+                return marker
 
-def next_move():
+def next_move(positions):
         while 1:
                 print(marker + '\'s turn\n')
                 move = input("Where do you want to go?\n")
                 if move in '123456789':
-                        return int(move)
-#combine next_move and space_check
-def space_check(move, positions):
-        while 1:
-                if (positions[move - 1] == 'X') or (positions[move - 1] == 'O'):
-                        print("That spot is taken - try again")
-                        return next_move()
-                else:
-                        break
+                        move = int(move)
+                        if (positions[move - 1] == 'X') or (positions[move - 1] == 'O'):
+                                print("That spot is taken - try again")
+                        else:
+                                return int(move)
 
 def place_marker(display_board, marker, position):
         positions[position-1] = marker
         print(display_board(positions))
 
 def win_check(marker):
-        if (marker in positions[0] and positions [1] and positions[2])\
-        or (marker in positions[3] and positions [4] and positions[5])\
-        or (marker in positions[6] and positions [7] and positions[8])\
-        or (marker in positions[0] and positions [3] and positions[6])\
-        or (marker in positions[1] and positions [4] and positions[7])\
-        or (marker in positions[2] and positions [5] and positions[8])\
-        or (marker in positions[0] and positions [4] and positions[8])\
-        or (marker in positions[2] and positions [4] and positions[6]):
+        if marker == positions[0] and marker == positions [1] and marker == positions[2]:
                 print(marker + " wins!")
+                return replay()
+        elif marker == positions[3] and marker == positions [4] and marker == positions[5]:
+                print(marker + " wins!")
+                return replay()
+        elif marker == positions[6] and marker == positions [7] and marker == positions[8]:
+                print(marker + " wins!")
+                return replay()
+        elif marker == positions[0] and marker == positions [3] and marker == positions[6]:
+                print(marker + " wins!")
+                return replay()
+        elif marker == positions[1] and marker == positions [4] and marker == positions[7]:
+                print(marker + " wins!")
+                return replay()
+        elif marker == positions[2] and marker == positions [5] and marker == positions[8]:
+                print(marker + " wins!")
+                return replay()
+        elif marker == positions[0] and marker == positions [4] and marker == positions[8]:
+                print(marker + " wins!")
+                return replay()
+        elif marker == positions[2] and marker == positions [4] and marker == positions[6]:
+                print(marker + " wins!")
+                return replay()
+
+def draw_check(positions, play_again):
+        if play_again == 'Y':
+                return play_again
+        if ('1' not in positions and '2' not in positions and '3' not in positions and '4' not in positions and '5' not in positions and '6' not in positions and '7' not in positions and '8' not in positions and '9' not in positions):
+                print('Game is a draw!')
+                return replay()
 
 def switch_turns(marker):
         if marker == 'O':
@@ -71,39 +86,31 @@ def replay():
         while 1:
                 response = input("Do you want to play again? (Y/N) \n")
                 if response.upper() == 'Y':
-                        pass
-                        turn_count = 0
+                        return response.upper()                        
                 elif response.upper() == 'N':
-                        system.exit()
+                        sys.exit()
                 else:
-                        print("Please eneter Y or N")
+                        print("Please enter Y or N")
 
                         
 while 1:
+        positions = ['1','2','3','4','5','6','7','8','9']
+        play_again = 'N'
         print("Welcome to Tic Tac Toe!")
         print(display_board(positions))
         marker = choose_first()
-        move = next_move()
-        space_check(move, positions)
+        move = next_move(positions)
         place_marker(display_board, marker, move)
         marker = switch_turns(marker)
 
         while 1:
-                move = next_move()               
-                space_check(move, positions)
+                move = next_move(positions)               
                 place_marker(display_board, marker, move)
-                #win_check(marker)
+                play_again = win_check(marker)
+                play_again = draw_check(positions, play_again)
+                if play_again == 'Y':
+                        positions = ['1','2','3','4','5','6','7','8','9']
+                        print("Welcome to Tic Tac Toe!")
+                        print(display_board(positions))        
+                        continue
                 marker = switch_turns(marker)
-
-
-                
-
-                
-                
-                
-                
-'''def player_input():
-        while 1:
-                player1_marker = input("Player 1: Do you want to be X or O?\n")
-                if player1.upper() == 'X' or player1.upper() == 'O':
-                        break'''        
